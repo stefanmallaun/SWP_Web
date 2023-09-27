@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Web_Grundlagen.Controllers {
-    public class HomeController : Controller {
+    public class UserController : Controller {
         public IActionResult Index() {
             return View();
         }
-        public IActionResult AboutUs() {
+
+        public IActionResult Privacy() {
             return View();
         }
     }
