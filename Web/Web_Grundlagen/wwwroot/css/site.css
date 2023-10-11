@@ -1,22 +1,85 @@
+﻿
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+/* Grundlegende Seitenelemente */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+#container {
+    /* Stile für den Container hier hinzufügen */
+}
+
+header {
+    height: 160px;
+    border-bottom: 1px solid #8e8b8b;
+    /* Weitere Stile für den Header hier hinzufügen */
+}
+
+nav {
+    width: 20%;
+    float: left;
+    height: 530px;
+    border-right: 1px solid #8e8b8b;
+    padding-left: 20px;
+    /* Weitere Stile für die Navigationsleiste hier hinzufügen */
+}
+
+content {
+    width: 80%;
+    float: left;
+    height: 530px;
+    /* Weitere Stile für den Hauptinhalt hier hinzufügen */
+}
+
+footer {
+    clear: both;
+    height: 50px;
+    text-align: right;
+    padding: 10px 20px 0px 0px;
+    border-top: 1px solid #8e8b8b;
+    /* Weitere Stile für den Footer hier hinzufügen */
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    font-weight: bold;
+}
+nav ul li{
+    list-style-type: none;
+
+    margin-left: 0px;
+}
+nav ul{
+    padding: 0px;
+}
+.level1 {
+
+}
+.level2{
+    font-size: 85%;
+    padding-left: 15px;
 }

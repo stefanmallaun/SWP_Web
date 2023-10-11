@@ -1,0 +1,52 @@
+﻿@model List<Web_Grundlagen.Models.User>
+
+@using Web_Grundlagen.Models
+
+@{
+    ViewData["Title"] = "ShowMultipleUser";
+}
+
+@if ((Model != null) && (Model.Count > 0))
+{
+    <table>
+        <thead>
+            <tr>
+                <th colspan="4">
+                    alle Benutzer
+                </th>
+            </tr>
+
+        </thead>
+        
+        <tbody>
+
+            @foreach (User u in Model)
+            {
+                <tr>
+                    <td>@u.Id</td>
+                    <td>@u.Name</td>
+                    <td>@u.Email</td>
+                    <td>@u.Birthdate.ToLongDateString()</td>
+                </tr>
+            }
+            
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    Fußzeile
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+}
+else{
+
+    <p>
+        Es sind noch keine User vorhanden!
+    </p>
+    
+}
+
