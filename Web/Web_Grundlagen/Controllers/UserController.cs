@@ -38,9 +38,42 @@ namespace Web_Grundlagen.Controllers {
                 ModelState.AddModelError("Birthdate", "Geburtsdatum muss in der Vergangenheit liegen!");
 
             }
+
+            
             
 
             //  OK -> in DB abspeichern + Erfolgsmeldung
+            if(ModelState.IsValid) {
+                //  in DB abspeichern (ORM) - Rückgabewert von SaveChangesAsync() verwenden
+                //      -> entsprechende Meldungen ausgeben
+                ///TODO: DB-Teil
+                /*
+                    ORM (EF-Core) verwenden
+
+                        1. 3 Pakete installieren
+                        2. DbContext-Klasse programmieren
+                                (DbSet<>, OnModelCreating()
+                        3. Fluent API bzw. Annotations (eMail (unique), PwdRetype (sollte nicht in der DB aufscheinen))
+                        4. Migrations (2 Befehle) 
+                        5. erzeugte DB überprüfens
+                        6. Db-Teil in der Registration()-Methode einbauen
+                                Pwd sollte gehashed werden (PasswordHasher)
+                                => in DB abspeichern
+                        7. Login: 
+                            a. View erzeugen
+                            b. Methode programmieren (Login())
+                            c. überprüfen, ob User mit PWD in der DB existiert + Erfolgs- bzw. Fehlermeldung 
+                 */
+
+
+                //  View mit der Erfolgsmeldung anzeigen
+                return View("Message", new Message() {
+                    Title = "Registrierung",
+                    MsgTxt= "Sie wurden erfolgreich registriert!"
+                });
+
+            }
+
 
             //  nicht OK -> Formular erneut mit den eingeg. Daten anzeigen
             //              inkl Fehlermeldungen

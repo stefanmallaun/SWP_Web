@@ -28,8 +28,11 @@
         <main>
 
             <nav>Navigation
+                @*
+                    diese Zeile und die Zeile mit <partial> sind identisch
+                @await Html.PartialAsync("Navigation")*@
 
-                @await Html.PartialAsync("Navigation")
+                <partial name="Navigation"></partial>
 
             </nav>
 
