@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Web_Grundlagen.DB;
 using Web_Grundlagen.Models;
 
 
@@ -22,9 +25,10 @@ namespace Web_Grundlagen.Controllers {
                 }
                 ); 
         }
+        
         //  User user .. hier sind die Daten des Formulars enthalten
         [HttpPost]
-        public IActionResult Registration(User user) {
+        public async Task<IActionResult> Registration(User user) {
             //  Formulardaten überprüfen (validieren)
             //  Überprüfung der Formulardaten am Server muss immer stattfinden
             if (user.Name.Trim().Length < 2) {
@@ -38,21 +42,39 @@ namespace Web_Grundlagen.Controllers {
                 ModelState.AddModelError("Birthdate", "Geburtsdatum muss in der Vergangenheit liegen!");
 
             }
+            //  Überprüfen, ob Pwd und PwdRetype gleich ist
+            if(user.Pwd == user.PwdRetype)
+            {
+                ModelState.AddModelError("Pwd", "Das Passwort muss übereinstimmen!");
+            }
+
 
             
             
 
             //  OK -> in DB abspeichern + Erfolgsmeldung
             if(ModelState.IsValid) {
+                // Hash the password
+                var passwordHasher = new PasswordHasher<User>();
+                user.Pwd = passwordHasher.HashPassword(user, user.Pwd);
+                
+
+                // Now, save the hashed password to the database
+                using (var dbContext = new DBManager()) // Replace YourDbContext with your actual DbContext class
+                {
+                    dbContext.Users.Add(user);
+                    await SaveToDbAsync(dbContext); // Save the changes to the database
+                }
+
                 //  in DB abspeichern (ORM) - Rückgabewert von SaveChangesAsync() verwenden
                 //      -> entsprechende Meldungen ausgeben
                 ///TODO: DB-Teil
                 /*
                     ORM (EF-Core) verwenden
 
-                        1. 3 Pakete installieren
+                        1. 3 Pakete installieren done
                         2. DbContext-Klasse programmieren
-                                (DbSet<>, OnModelCreating()
+                                (DbSet<>, OnModelCreating() done
                         3. Fluent API bzw. Annotations (eMail (unique), PwdRetype (sollte nicht in der DB aufscheinen))
                         4. Migrations (2 Befehle) 
                         5. erzeugte DB überprüfens
@@ -79,6 +101,31 @@ namespace Web_Grundlagen.Controllers {
             //              inkl Fehlermeldungen
             return View(user);
         }
+        public static async Task SaveToDbAsync(DbContext dbContext)
+        {
+
+            try
+            {
+                //  das Speichern erfolgt asynchron (parallel) - auf einem anderen Thread 
+                //      => das Programm bleibt responsive (es kann damit weitergearbeitet werden)
+                await dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                //  loggen
+                Console.WriteLine("Fehler: DBUpdate");
+            }
+            catch (DbUpdateException)
+            {
+                //  loggen
+                Console.WriteLine("Fehler: DBUpdate");
+            }
+
+        }
+        private DBManager dBManager = new DBManager();
+        
+       
+        
         public IActionResult ShowOneUser() {
             //  Daten (einen User) vom Controller an die View übergeben
             //  die Userdaten kommen normalerweise aus einer DB-Tabelle
