@@ -3,48 +3,34 @@
 @using Web_Grundlagen.Models
 
 @{
-    ViewData["Title"] = "ShowAllUser";
+    ViewData["Title"] = "Alle Benutzer anzeigen";
 }
 
-@if ((Model != null) && (Model.Count > 0)) {
-    <table>
+@if (Model != null && Model.Count > 0)
+{
+    <h2>Alle Benutzer</h2>
+    <table class="table">
         <thead>
             <tr>
-                <th colspan="4">
-                    alle Benutzer
-                </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Geburtsdatum</th>
             </tr>
-
         </thead>
-
         <tbody>
-
-            @foreach (User u in Model) {
+            @foreach (var user in Model)
+            {
                 <tr>
-                    <td>@u.Name</td>
-                    <td>@u.Email</td>
-                    <td>@u.Birthdate.ToLongDateString()</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Birthdate.ToLongDateString()</td>
                 </tr>
             }
-
         </tbody>
-
-        <tfoot>
-            <tr>
-                <td colspan="4">
-                    Fußzeile
-                </td>
-            </tr>
-        </tfoot>
-
+        
     </table>
 }
-else {
-
-    <p>
-        Es sind noch keine User vorhanden!
-    </p>
-
+else
+{
+    <p>Es sind noch keine Benutzer vorhanden!</p>
 }
-
-

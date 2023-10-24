@@ -201,14 +201,21 @@ namespace Web_Grundlagen.Controllers {
         };
             return View(users);
         }
-
+        
         public async Task<IActionResult> ShowAllUser() {
             //  Daten (einen Userliste) vom Controller an die View übergeben
-            List<User> allUserFromDB = new List<User>();
+            
             using (DBManager dbManager = new DBManager()) {
-                allUserFromDB = await dbManager.Users.ToListAsync<List>;
+                List<User> allUserFromDB = await dbManager.Users.ToListAsync<User>();
+                return View(allUserFromDB);
             };
-            return View(allUserFromDB);
+            
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser()
+        {
+            return View(ShowMultipleUser);
+        }
+        
     }
 }
