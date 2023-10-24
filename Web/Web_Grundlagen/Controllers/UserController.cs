@@ -43,7 +43,7 @@ namespace Web_Grundlagen.Controllers {
 
             }
             //  Überprüfen, ob Pwd und PwdRetype gleich ist
-            if(user.Pwd == user.PwdRetype)
+            if(user.Pwd != user.PwdRetype)
             {
                 ModelState.AddModelError("Pwd", "Das Passwort muss übereinstimmen!");
             }
@@ -123,8 +123,13 @@ namespace Web_Grundlagen.Controllers {
 
         }
         private DBManager dBManager = new DBManager();
-        
-       
+        /*[HttpGet]
+        public IActionResult Login() {
+            User u = new User();
+            return View();
+
+        }
+       */
         
         public IActionResult ShowOneUser() {
             //  Daten (einen User) vom Controller an die View übergeben

@@ -11,20 +11,11 @@
         <thead>
 
             <tr>
-                <th colspan="2">Registrierungsformular</th>
+                <th colspan="2">Login</th>
             </tr>
 
         </thead>
         <tbody>
-            <tr>
-                <td>Name *</td>
-                <td>
-                    <input type="text" asp-for="Name" />
-                </td>
-                <td>
-                    <span asp-validation-for="Name"></span>
-                </td>
-            </tr>
             <tr>
                 <td>Email *</td>
                 <td>
@@ -43,27 +34,7 @@
                     <span asp-validation-for="Pwd"></span>
                 </td>
             </tr>
-            <tr>
-            <tr>
-                <td>Password erneut eingeben*</td>
-                <td>
-                    <input type="password" asp-for="PwdRetype" />
-                </td>
-                <td>
-                    <span asp-validation-for="PwdRetype"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Geburtsdatum</td>
-                <td>
-                    <input type="date" asp-for="Birthdate" />
-                </td>
-                <td>
-                    <span asp-validation-for="Birthdate"></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
+            <td colspan="2"></td>
                 <td>
 
                     <input type="submit" value="absenden" />
