@@ -3,11 +3,10 @@
 @using Web_Grundlagen.Models
 
 @{
-    ViewData["Title"] = "ShowMultipleUser";
+    ViewData["Title"] = "ShowAllUser";
 }
 
-@if ((Model != null) && (Model.Count > 0))
-{
+@if ((Model != null) && (Model.Count > 0)) {
     <table>
         <thead>
             <tr>
@@ -17,20 +16,19 @@
             </tr>
 
         </thead>
-        
+
         <tbody>
 
-            @foreach (User u in Model)
-            {
+            @foreach (User u in Model) {
                 <tr>
                     <td>@u.Name</td>
                     <td>@u.Email</td>
                     <td>@u.Birthdate.ToLongDateString()</td>
                 </tr>
             }
-            
+
         </tbody>
-        
+
         <tfoot>
             <tr>
                 <td colspan="4">
@@ -41,11 +39,12 @@
 
     </table>
 }
-else{
+else {
 
     <p>
         Es sind noch keine User vorhanden!
     </p>
-    
+
 }
+
 

@@ -11,8 +11,8 @@ using Web_Grundlagen.DB;
 namespace Web_Grundlagen.Migrations
 {
     [DbContext(typeof(DBManager))]
-    [Migration("20231023062903_asdf")]
-    partial class asdf
+    [Migration("20231024121239_db")]
+    partial class db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,16 +24,11 @@ namespace Web_Grundlagen.Migrations
 
             modelBuilder.Entity("Web_Grundlagen.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Email")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -43,7 +38,7 @@ namespace Web_Grundlagen.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("Email");
 
                     b.HasIndex("Email")
                         .IsUnique();

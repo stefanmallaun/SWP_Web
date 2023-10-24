@@ -21,16 +21,11 @@ namespace Web_Grundlagen.Migrations
 
             modelBuilder.Entity("Web_Grundlagen.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Email")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -40,7 +35,7 @@ namespace Web_Grundlagen.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("Email");
 
                     b.HasIndex("Email")
                         .IsUnique();

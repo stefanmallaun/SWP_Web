@@ -7,6 +7,7 @@ using Web_Grundlagen.Models;
 
 namespace Web_Grundlagen.Controllers {
     public class UserController : Controller {
+        PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
         public IActionResult Index() {
             return View();
         }
@@ -15,7 +16,10 @@ namespace Web_Grundlagen.Controllers {
             return View();
         }
         public IActionResult Login() {
-            return View();
+            return View(
+                new User()
+
+                );
         }
         public IActionResult Registration() {
             return View(
@@ -26,6 +30,7 @@ namespace Web_Grundlagen.Controllers {
                 ); 
         }
         
+
         //  User user .. hier sind die Daten des Formulars enthalten
         [HttpPost]
         public async Task<IActionResult> Registration(User user) {
@@ -55,7 +60,7 @@ namespace Web_Grundlagen.Controllers {
             //  OK -> in DB abspeichern + Erfolgsmeldung
             if(ModelState.IsValid) {
                 // Hash the password
-                var passwordHasher = new PasswordHasher<User>();
+                
                 user.Pwd = passwordHasher.HashPassword(user, user.Pwd);
                 
 
@@ -122,21 +127,49 @@ namespace Web_Grundlagen.Controllers {
             }
 
         }
-        private DBManager dBManager = new DBManager();
-        /*[HttpGet]
-        public IActionResult Login() {
-            User u = new User();
-            return View();
+        
+        
+        [HttpPost]
+        public async Task<IActionResult> Login(User u) {
+            using (DBManager dbManager = new DBManager()) {
+                User userFromDB = await dbManager.Users.FindAsync(u.Email);
+                if (userFromDB != null) {
+                    u.Name= userFromDB.Name;
+                    u.Birthdate= userFromDB.Birthdate;
+                    u.PwdRetype = u.Pwd;
 
+
+                    PasswordVerificationResult passwordResult = passwordHasher.VerifyHashedPassword(u, userFromDB.Pwd, u.Pwd);
+                    
+                    if(passwordResult == PasswordVerificationResult.Success) {
+                        return RedirectToAction("Index", "Home");
+                    }
+                else {
+                    return View("Message", new Message() {
+                        Title = "Login",
+                        MsgTxt = "Email oder Passwort ist falsch!"
+                    });
+                }
+                }
+                
+                else {
+                    
+                        return View("Message", new Message() {
+                            Title = "Login",
+                            MsgTxt = "Sie müssen sich zuerst registrieren!"
+                        });
+                
+                }
+            }
         }
-       */
+       
         
         public IActionResult ShowOneUser() {
             //  Daten (einen User) vom Controller an die View übergeben
             //  die Userdaten kommen normalerweise aus einer DB-Tabelle
 
             User u = new User() {
-                Id = 1000,
+                
                 Name = "Testuser",
                 Birthdate = new DateTime(2005, 5, 19),
                 Email = "t@gmx.at"
@@ -148,25 +181,34 @@ namespace Web_Grundlagen.Controllers {
             //  Daten (einen Userliste) vom Controller an die View übergeben
             List<User> users = new List<User>() {
             new User() {
-                Id = 1000,
+                
                 Name = "Testuser",
                 Birthdate = new DateTime(2005, 5, 19),
                 Email = "t@gmx.at"
             },
             new User() {
-                Id = 1001,
+                
                 Name = "user 2",
                 Birthdate = new DateTime(2010, 5, 1),
                 Email = "t2@gmx.at"
             },
             new User() {
-                Id = 1002,
+                
                 Name = "User 3",
                 Birthdate = new DateTime(2000, 8, 9),
                 Email = "t3@gmx.at"
             }
         };
             return View(users);
+        }
+
+        public async Task<IActionResult> ShowAllUser() {
+            //  Daten (einen Userliste) vom Controller an die View übergeben
+            List<User> allUserFromDB = new List<User>();
+            using (DBManager dbManager = new DBManager()) {
+                allUserFromDB = await dbManager.Users.ToListAsync<List>;
+            };
+            return View(allUserFromDB);
         }
     }
 }
