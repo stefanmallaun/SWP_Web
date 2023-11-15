@@ -2,35 +2,55 @@
 
 @using Web_Grundlagen.Models
 
-@{
-    ViewData["Title"] = "Alle Benutzer anzeigen";
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+<body>
 
-@if (Model != null && Model.Count > 0)
-{
-    <h2>Alle Benutzer</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Geburtsdatum</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.Name</td>
-                    <td>@user.Email</td>
-                    <td>@user.Birthdate.ToLongDateString()</td>
-                </tr>
-            }
-        </tbody>
-        
-    </table>
-}
-else
-{
-    <p>Es sind noch keine Benutzer vorhanden!</p>
-}
+    <div class="container mt-5">
+        @if (Model != null && Model.Count > 0) {
+            <h2>Alle Benutzer</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Geburtsdatum</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model) {
+                        <tr>
+                            <td>@user.Name</td>
+                            <td>@user.Email</td>
+                            <td>@user.Birthdate.ToLongDateString()</td>
+                            <td>
+                                <form asp-controller="User" asp-action="deleteUser" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                    <input type="hidden" name="Email" value="@user.Email" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+
+                                <a href="@Url.Action("EditUser", "User", new { email = user.Email })" class="btn btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else {
+            <p>Es sind noch keine Benutzer vorhanden!</p>
+        }
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -3,78 +3,98 @@
     ViewData["Title"] = "Registration";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding: 20px;
+        }
 
-<form asp-controller="user" asp-action="registration" methode="post">
+        h1 {
+            margin-bottom: 20px;
+        }
 
-    <table>
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
 
-        <thead>
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-            <tr>
-                <th colspan="2">Registrierungsformular</th>
-            </tr>
+        td {
+            padding: 8px;
+        }
 
-        </thead>
-        <tbody>
-            <tr>
-                <td>Name *</td>
-                <td>
-                    <input type="text" asp-for="Name"/>
-                </td>
-                <td>
-                    <span asp-validation-for="Name"></span>
-                </td>
-            </tr>
-             <tr>
-                <td>Email *</td>
-                <td>
-                    <input type="email" asp-for="Email"/>
-                </td>
-                <td>
-                    <span asp-validation-for="Email"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Password *</td>
-                <td>
-                    <input type="password" asp-for="Pwd" />
-                </td>
-                <td>
-                    <span asp-validation-for="Pwd"></span>
-                </td>
-            </tr>
-            <tr>
-            <tr>
-                <td>Password erneut eingeben*</td>
-                <td>
-                    <input type="password" asp-for="PwdRetype" />
-                </td>
-                <td>
-                    <span asp-validation-for="PwdRetype"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Geburtsdatum</td>
-                <td>
-                    <input type="date" asp-for="Birthdate"/>
-                </td>
-                <td>
-                    <span asp-validation-for="Birthdate"></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td>
-                   
-                    <input type="submit" value="absenden" />
-                    <input type="reset" value="abbrechen" />
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="2">*-Felder sind Pflichtfelder</th>
-            </tr>
-        </tfoot>
-    </table>
-</form>
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+            input[type="submit"],
+            input[type="reset"] {
+                background-color: #007bff;
+                color: #fff;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                input[type="submit"]:hover,
+                input[type="reset"]:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+
+    <h1>Registrierungsformular</h1>
+
+    <form asp-controller="User" asp-action="Registration" method="post">
+        <div class="form-group">
+            <label asp-for="Name">Name *</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Email *</label>
+            <input asp-for="Email" type="email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Pwd">Password *</label>
+            <input asp-for="Pwd" type="password" class="form-control" />
+            <span asp-validation-for="Pwd" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PwdRetype">Password erneut eingeben *</label>
+            <input asp-for="PwdRetype" type="password" class="form-control" />
+            <span asp-validation-for="PwdRetype" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Birthdate">Geburtsdatum</label>
+            <input asp-for="Birthdate" type="date" class="form-control" />
+            <span asp-validation-for="Birthdate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Absenden</button>
+            <button type="reset" class="btn btn-secondary">Abbrechen</button>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

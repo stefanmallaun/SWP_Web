@@ -1,51 +1,107 @@
 ﻿@model Web_Grundlagen.Models.User
+
 @{
     ViewData["Title"] = "Login";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding: 20px;
+        }
 
-<form asp-controller="user" asp-action="login" methode="post">
+        h1 {
+            margin-bottom: 20px;
+        }
 
-    <table>
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
 
-        <thead>
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-            <tr>
-                <th colspan="2">Login</th>
-            </tr>
+        td {
+            padding: 8px;
+        }
 
-        </thead>
-        <tbody>
-            <tr>
-                <td>Email *</td>
-                <td>
-                    <input type="email" asp-for="Email" />
-                </td>
-                <td>
-                    <span asp-validation-for="Email"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Password *</td>
-                <td>
-                    <input type="password" asp-for="Pwd" />
-                </td>
-                <td>
-                    <span asp-validation-for="Pwd"></span>
-                </td>
-            </tr>
-            <td colspan="2"></td>
-                <td>
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
 
-                    <input type="submit" value="absenden" />
-                    <input type="reset" value="abbrechen" />
-                </td>
-           </tr>
-       </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="2">*-Felder sind Pflichtfelder</th>
-            </tr>
-        </tfoot>
-    </table>
-</form>
+            input[type="submit"],
+            input[type="reset"] {
+                background-color: #007bff;
+                color: #fff;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                input[type="submit"]:hover,
+                input[type="reset"]:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+
+    <h1>Login</h1>
+
+    <form asp-controller="User" asp-action="Login" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">Login</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Email *</td>
+                    <td>
+                        <input type="email" asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password *</td>
+                    <td>
+                        <input type="password" asp-for="Pwd" class="form-control" />
+                        <span asp-validation-for="Pwd" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td>
+                        <input type="submit" value="Login" />
+                        <input type="reset" value="Reset" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">*-Felder sind Pflichtfelder</th>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

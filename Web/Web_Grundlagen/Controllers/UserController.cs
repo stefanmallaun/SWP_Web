@@ -211,11 +211,123 @@ namespace Web_Grundlagen.Controllers {
             };
             
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser()
-        {
-            return View(ShowMultipleUser);
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string Email) {
+            using (DBManager dbManager = new DBManager()) {
+                var userToDelete = dbManager.Users.FirstOrDefault(u => u.Email == Email);
+
+                if (userToDelete != null) {
+                    dbManager.Users.Remove(userToDelete);
+                    await dbManager.SaveChangesAsync();
+                }
+                /*
+                List<User> allUserFromDB = await dbManager.Users.ToListAsync<User>();
+                return View(allUserFromDB);
+                */
+                return RedirectToAction("ShowAllUser");
+            }
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(User updatedUser) {
+            using (DBManager dbManager = new DBManager()) {
+                // Find the user in the database
+                User userToEdit = await dbManager.Users.FirstOrDefaultAsync(u => u.Email == updatedUser.Email);
+
+                if (userToEdit == null) {
+                    // User not found
+                    return NotFound();
+                }
+
+                // Update the user details
+                userToEdit.Name = updatedUser.Name;
+                userToEdit.Birthdate = updatedUser.Birthdate;
+
+                // Save changes to the database
+                await SaveToDbAsync(dbManager);
+
+                // Redirect to the user list or another appropriate action
+                return RedirectToAction("ShowAllUser");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> editUser(User user) {
+            
+            if (user.Name.Trim().Length < 2) {
+                ModelState.AddModelError("Name", "Der Name muss min. 2 Zeichen lang sein!");
+            }
+            if (!user.Email.Contains('@')) {
+                ModelState.AddModelError("Email", "Bitte gültige Mail-adresse eingeben!");
+            }
+            
+            if ((user.Birthdate != DateTime.Now) && (user.Birthdate > DateTime.Now)) {
+                ModelState.AddModelError("Birthdate", "Geburtsdatum muss in der Vergangenheit liegen!");
+
+            }
+            
+            if (user.Pwd != user.PwdRetype) {
+                ModelState.AddModelError("Pwd", "Das Passwort muss übereinstimmen!");
+            }
+
+            
+            if (ModelState.IsValid) {
+               
+
+                user.Pwd = passwordHasher.HashPassword(user, user.Pwd);
+
+
+               
+                using (var dbContext = new DBManager()) 
+                {
+                    dbContext.Users.Add(user);
+                    await SaveToDbAsync(dbContext); 
+                }
+
+
+            }
+
+
+            return RedirectToAction("ShowAllUser");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string email) {
+            using (DBManager dbManager = new DBManager()) {
+                User userToEdit = await dbManager.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+                if (userToEdit == null) {
+                    return NotFound(); // Or handle not found case as needed
+                }
+
+                return View(userToEdit); // Pass the user details to the EditUser view
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUserr(User updatedUser) {
+            using (DBManager dbManager = new DBManager()) {
+                User userToEdit = await dbManager.Users.FirstOrDefaultAsync(u => u.Email == updatedUser.Email);
+
+                if (userToEdit == null) {
+                    return NotFound();
+                }
+
+                // Update user details
+                userToEdit.Name = updatedUser.Name;
+                userToEdit.Birthdate = updatedUser.Birthdate;
+                userToEdit.Pwd = passwordHasher.HashPassword(userToEdit, updatedUser.Pwd);
+
+                await SaveToDbAsync(dbManager);
+
+                return RedirectToAction("ShowAllUser");
+            }
+        }
+
+
     }
+
+
+
+
 }

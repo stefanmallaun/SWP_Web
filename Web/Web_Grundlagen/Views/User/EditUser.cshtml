@@ -1,0 +1,83 @@
+﻿@model Web_Grundlagen.Models.User
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <h1>Edit User</h1>
+
+    <form asp-controller="User" asp-action="EditUser" method="post">
+        <input type="hidden" asp-for="Email" />
+
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="Birthdate"></label>
+            <input asp-for="Birthdate" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="Pwd"></label>
+            <input type="password" asp-for="Pwd" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="PwdRetype"></label>
+            <input type="password" asp-for="PwdRetype" class="form-control" />
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
