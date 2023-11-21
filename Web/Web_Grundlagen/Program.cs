@@ -6,6 +6,21 @@ namespace Web_Grundlagen {
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Sessions
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddDistributedMemoryCache();
+            
+           
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,6 +36,9 @@ namespace Web_Grundlagen {
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //  Session
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

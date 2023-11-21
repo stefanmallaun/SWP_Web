@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Web_Grundlagen.Extensions
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,11 +19,32 @@
     class   ... CSS-Formatierungen können so auf mehrere Elemente angewandt werden
 
     *@
+    
+        
+    
     <div id="container">
 
         <header>
 
             Kopfbereich
+            <p>
+
+                <b>User</b>
+
+                @{
+                    var user = HttpContextAccessor.HttpContext.Session.Get<User>("User");
+                        
+                    
+
+                    if (user != null) {
+
+                        <text>@user.Name</text>
+
+                    }
+
+                }
+
+            </p>
 
         </header>
 

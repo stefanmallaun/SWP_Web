@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web_Grundlagen.DB;
 using Web_Grundlagen.Models;
+using Web_Grundlagen.Extensions;
 
 
 namespace Web_Grundlagen.Controllers {
@@ -140,7 +141,8 @@ namespace Web_Grundlagen.Controllers {
 
 
                     PasswordVerificationResult passwordResult = passwordHasher.VerifyHashedPassword(u, userFromDB.Pwd, u.Pwd);
-                    
+
+                    HttpContext.Session.Set("User", userFromDB);
                     if(passwordResult == PasswordVerificationResult.Success) {
                         return RedirectToAction("Index", "Home");
                     }
@@ -297,10 +299,10 @@ namespace Web_Grundlagen.Controllers {
                 User userToEdit = await dbManager.Users.FirstOrDefaultAsync(u => u.Email == email);
 
                 if (userToEdit == null) {
-                    return NotFound(); // Or handle not found case as needed
+                    return NotFound(); 
                 }
 
-                return View(userToEdit); // Pass the user details to the EditUser view
+                return View(userToEdit); 
             }
         }
 
