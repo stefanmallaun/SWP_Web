@@ -54,23 +54,23 @@
 
     <form asp-controller="User" asp-action="EditUserr" method="post">
         <input type="hidden" asp-for="Email" />
-
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" readonly/>
+        </div>
         <div>
             <label asp-for="Name"></label>
             <input asp-for="Name" class="form-control" />
         </div>
         <div>
             <label asp-for="Birthdate"></label>
-            <input asp-for="Birthdate" class="form-control" />
+            @*<input asp-for="Birthdate" class="form-control"/>*@
         </div>
         <div>
             <label asp-for="Pwd"></label>
-            <input type="password" asp-for="Pwd" class="form-control" />
+            <input type="password" asp-for="Pwd" class="form-control" readonly/>
         </div>
-        <div>
-            <label asp-for="PwdRetype"></label>
-            <input type="password" asp-for="PwdRetype" class="form-control" />
-        </div>
+        
 
         <button type="submit">Save Changes</button>
     </form>

@@ -30,7 +30,7 @@
             Kopfbereich
             <p>
 
-                <b>User</b>
+                
 
                 @{
                     var user = HttpContextAccessor.HttpContext.Session.Get<User>("User");
@@ -43,6 +43,9 @@
                         <form method="post" asp-action="Logout" asp-controller="User">
                             <button type="submit">Logout</button>
                         </form>
+                    }
+                    else {
+                        <button><a href="/User/Login">Login</a></button>
                     }
 
                 }
@@ -61,6 +64,7 @@
                 @await Html.PartialAsync("Navigation")*@
 
                 <partial name="Navigation"></partial>
+                
 
             </nav>
 

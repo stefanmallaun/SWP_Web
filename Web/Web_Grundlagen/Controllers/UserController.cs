@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Web_Grundlagen.DB;
 using Web_Grundlagen.Models;
 using Web_Grundlagen.Extensions;
+using Web_Grundlagen.Extensions;
 
 
 namespace Web_Grundlagen.Controllers {
@@ -310,7 +311,8 @@ namespace Web_Grundlagen.Controllers {
         public async Task<IActionResult> EditUserr(User updatedUser) {
             using (DBManager dbManager = new DBManager()) {
                 User userToEdit = await dbManager.Users.FirstOrDefaultAsync(u => u.Email == updatedUser.Email);
-
+              
+               
                 if (userToEdit == null) {
                     return NotFound();
                 }

@@ -1,4 +1,7 @@
-﻿ <ul>
+﻿@using Web_Grundlagen.Extensions
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<ul>
                 <li class="level1">
                     <a href="/Home/Index">Home</a>
                 </li>
@@ -24,4 +27,13 @@
                     <a href="/user/showAllUser">Userverwaltung</a>
                 </li>
 
-            </ul>
+    @{
+        var user = HttpContextAccessor.HttpContext.Session.Get<User>("User");
+        if(user != null) {
+            <li class="level2">
+                <a href="/user/editUser?email=@user.Email">User ändern</a>
+            </li>
+        }
+    }
+
+</ul>
