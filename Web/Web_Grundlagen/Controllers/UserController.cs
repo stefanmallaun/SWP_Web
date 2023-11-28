@@ -325,7 +325,12 @@ namespace Web_Grundlagen.Controllers {
                 return RedirectToAction("ShowAllUser");
             }
         }
-
+        [HttpPost]
+        public IActionResult Logout() {
+            HttpContext.Session.Clear();
+           
+            return RedirectToAction("Index", "Home");
+        }
 
     }
 

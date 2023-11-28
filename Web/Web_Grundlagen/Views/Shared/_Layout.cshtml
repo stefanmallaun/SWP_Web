@@ -1,5 +1,6 @@
 ﻿@using Web_Grundlagen.Extensions
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,10 +40,14 @@
                     if (user != null) {
 
                         <text>@user.Name</text>
-
+                        <form method="post" asp-action="Logout" asp-controller="User">
+                            <button type="submit">Logout</button>
+                        </form>
                     }
 
                 }
+
+                
 
             </p>
 
