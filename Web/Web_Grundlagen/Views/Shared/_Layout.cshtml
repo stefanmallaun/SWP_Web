@@ -19,9 +19,7 @@
     id      ... eindeutig zugreifbar
     class   ... CSS-Formatierungen können so auf mehrere Elemente angewandt werden
 
-    *@
-    
-        
+    *@  
     
     <div id="container">
 
@@ -30,13 +28,9 @@
             Kopfbereich
             <p>
 
-                
-
                 @{
                     var user = HttpContextAccessor.HttpContext.Session.Get<User>("User");
-                        
-                    
-
+                   
                     if (user != null) {
 
                         <text>@user.Name</text>
@@ -84,12 +78,6 @@
     </div>
 
     @* Comment Razor *@
-
-
-
-
-
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
