@@ -5,7 +5,14 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head runat="server">
+    
+        <link rel="stylesheet" type="text/css" href="~/js/site.js" />
+        <script src="~/Scripts/global.js"></script>
+        <asp:ContentPlaceHolder ID="head" runat="server">
+        </asp:ContentPlaceHolder>
+    
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>@ViewData["Title"]</title>
@@ -60,8 +67,8 @@
 <body>
 
     <h1>Registrierungsformular</h1>
-
-    <form asp-controller="User" asp-action="Registration" method="post">
+    <form id="registrationForm" asp-controller="User" asp-action="Registration" method="post">
+    
         <div class="form-group">
             <label asp-for="Name">Name *</label>
             <input asp-for="Name" class="form-control" />
@@ -88,14 +95,17 @@
             <span asp-validation-for="Birthdate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Absenden</button>
-            <button type="reset" class="btn btn-secondary">Abbrechen</button>
+                <div class="form-group">
+                    <button type="button" onclick="validateAndSubmit()" class="btn btn-primary">Absenden</button>
+                    <button type="reset" class="btn btn-secondary">Abbrechen</button>
+                </div>
         </div>
     </form>
+    
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <script src="~/js/site.js"></script>
 </body>
 </html>
