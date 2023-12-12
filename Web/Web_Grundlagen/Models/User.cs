@@ -14,9 +14,7 @@ namespace Web_Grundlagen.Models {
         
         public DateTime Birthdate { get; set; }
 
-
-
-
+        public Role Role { get; set; }
         
     }
 }
