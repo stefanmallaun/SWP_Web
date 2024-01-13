@@ -1,26 +1,24 @@
 ﻿@model List<Web_Grundlagen.Models.User>
 
 @using Web_Grundlagen.Models
-
-<!DOCTYPE html>
-<html lang="de">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    
 </head>
 <body>
 
     <div class="container mt-5">
         <h2>Alle Benutzer</h2>
-
+        <form action="">
         <!-- Dropdown-Liste für die Rollen -->
-        <select id="roleDropdown" class="form-control">
+        <select id="roleDropdown" onchange="showUser(this.value)" class="form-control">
             <option value="all">Alle Rollen</option>
+            <option value="registeredUser">registeredUser</option>
+            <option value="Admin">Admin</option>
         </select>
-
-
+        </form>
+        <br />
+        <table class="table table-striped mt-3" id="userTable" />
+        <!--
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
@@ -31,6 +29,7 @@
                 </tr>
             </thead>
             <tbody id="userTableBody">
+                @*
                 @foreach (var user in Model) {
                     <tr>
                         <td>@user.Name</td>
@@ -42,56 +41,19 @@
                         </td>
                     </tr>
                 }
+                *@
             </tbody>
         </table>
-
+        </div>
+        
         @if (Model == null || Model.Count == 0) {
             <p>Es sind noch keine Benutzer vorhanden!</p>
         }
-    </div>
+    
+        -->
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            function loadRolesAndUsers(role) {
-                $.ajax({
-                    url: "/User/GetUsersByRole",
-                    type: "GET",
-                    data: { role: role },
-                    success: function (data) {
-                        var userTableBody = $("#userTableBody");
-                        userTableBody.empty();
-                        $.each(data, function (index, user) {
-                            userTableBody.append('<tr><td>' + user.Name + '</td><td>' + user.Email + '</td><td>' + user.Birthdate + '</td><td><a href="/User/EditUser?email=' + user.Email + '" class="btn btn-primary">Edit</a></td></tr>');
-                        });
-                    },
-                    error: function () {
-                        alert("Fehler beim Laden der Benutzer.");
-                    }
-                });
-            }
-
-            $.ajax({
-                url: "/User/showAllUser",
-                type: "GET",
-                success: function (data) {
-                    var roleDropdown = $("#roleDropdown");
-                    $.each(data, function (index, role) {
-                        roleDropdown.append('<option value="' + role + '">' + role + '</option>');
-                    });
-
-                    // Dropdown-Änderungsereignis
-                    roleDropdown.change(function () {
-                        var selectedRole = $(this).val();
-                        loadRolesAndUsers(selectedRole);
-                    });
-                },
-                error: function () {
-                    alert("Fehler beim Laden der Rollen.");
-                }
-            });
-        });
-    </script>
+        </div>
+            
 
 </body>
-</html>
+

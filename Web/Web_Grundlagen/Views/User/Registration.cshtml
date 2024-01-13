@@ -3,72 +3,11 @@
     ViewData["Title"] = "Registration";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head runat="server">
-    
-        <link rel="stylesheet" type="text/css" href="~/js/site.js" />
-        <script src="~/Scripts/global.js"></script>
-        <asp:ContentPlaceHolder ID="head" runat="server">
-        </asp:ContentPlaceHolder>
-    
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <style>
-        body {
-            padding: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        form {
-            max-width: 400px;
-            margin: auto;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        td {
-            padding: 8px;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-        }
-
-            input[type="submit"],
-            input[type="reset"] {
-                background-color: #007bff;
-                color: #fff;
-                padding: 8px 16px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-                input[type="submit"]:hover,
-                input[type="reset"]:hover {
-                    background-color: #0056b3;
-                }
-    </style>
-</head>
-@*///TODO: alle CSS sachen in die site.css machen*@
 <body>
 
     <h1>Registrierungsformular</h1>
     <form id="registrationForm" asp-controller="User" asp-action="Registration" method="post">
-    ///TODO: für jeden eintrag eine eigene Fehlermeldung!
         <div class="form-group">
             <label asp-for="Name">Name *</label>
             <input asp-for="Name" class="form-control" onblur="validateName()"/>
@@ -76,17 +15,17 @@
         </div>
         <div class="form-group">
             <label asp-for="Email">Email *</label>
-            <input asp-for="Email" type="email" class="form-control" onlblur="validateEmail()"/>
+            <input asp-for="Email" type="email" class="form-control" onblur="validateEmail()"/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Pwd">Password *</label>
-            <input asp-for="Pwd" type="password" class="form-control"  />
+            <input asp-for="Pwd" type="password" class="form-control" onblur="validatePassword()" />
             <span asp-validation-for="Pwd" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="PwdRetype">Password erneut eingeben *</label>
-            <input asp-for="PwdRetype" type="password" class="form-control" />
+            <input asp-for="PwdRetype" type="password" class="form-control" onblur="validatePasswordRetype()" />
             <span asp-validation-for="PwdRetype" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -96,16 +35,10 @@
         </div>
         <div class="form-group">
                 <div class="form-group">
-                    <button type="button" onclick="validateNameAndSubmit" class="btn btn-primary">Absenden</button>
+                <button type="button" class="btn btn-primary" onclick="submit()">Absenden</button>
                     <button type="reset" class="btn btn-secondary">Abbrechen</button>
                 </div>
         </div>
     </form>
-    
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="~/js/site.js"></script>
 </body>
-</html>
+

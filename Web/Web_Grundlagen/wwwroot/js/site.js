@@ -1,40 +1,4 @@
-﻿
-function validateNameAndSubmit() {
-    // Formulardaten abrufen
-    var name = document.getElementById("Name").value;
-    var email = document.getElementById("Email").value;
-    var pwd = document.getElementById("Pwd").value;
-    var pwdRetype = document.getElementById("PwdRetype").value;
-    var birthdate = document.getElementById("Birthdate").value;
-
-    
-    var isValid = true;
-
-    
-    if (name.trim() === "" || email.trim() === "" || pwd.trim() === "" || pwdRetype.trim() === "" || birthdate.trim() === "") {
-        isValid = false;
-        alert("Bitte füllen Sie alle Pflichtfelder aus.");
-    }
-
-    // Überprüfung, ob die E-Mail ein '@' enthält
-    if (email.indexOf('@') === -1) {
-        isValid = false;
-        alert("Die E-Mail-Adresse muss ein '@' enthalten.");
-    }
-
-    
-    var specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    if (!specialCharacterRegex.test(pwd)) {
-        isValid = false;
-        alert("Das Passwort muss mindestens ein Sonderzeichen enthalten.");
-    }
-
-    if (isValid) {
-        document.getElementById("registrationForm").submit();
-    }
-}
-
-function validateName() {
+﻿function validateName() {
     var name = document.getElementById("Name").value;
 
     if (name === "") {
@@ -49,18 +13,84 @@ function validateEmail() {
     var email = document.getElementById("Email").value;
 
     if (email.indexOf('@') === -1) {
-        alert("Bitte füllen Sie das Pflichtfeld aus.");
+        alert("Muss ein '@' enthalten");
         return false;
     }
     else {
         return true;
     }
 }
+
+function validatePassword() {
+    var pw = document.getElementById("Pwd").value;
+
+    if (pw.length < 3) {
+        alert("Passwort muss mindestens 4 Zeichen lang sein.");
+        return false;
+    }
+    var specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!specialCharacterRegex.test(pw)) {
+        
+        alert("Das Passwort muss mindestens ein Sonderzeichen enthalten.");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function validatePasswordRetype() {
+    var pw = document.getElementById("Pwd").value; 
+    var pwRetype = document.getElementById("PwdRetype").value;
+
+    if (pwRetype.indexOf(pw)) {
+        alert("Stimmt mit Password nicht überein!");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+function validateBD() {
+    var bd = document.getElementById("Birthdate").value;
+    if (bd > Date.now()) {
+        alert("Geben Sie ein richtiges Geburtsdatum ein!");
+        return false;
+    } else {
+        return true;
+    }
+}
 function submit() {
-    if (validateEmail && validateName) {
+    if (validateName && validateEmail && validatePassword && validatePasswordRetype && validateBD) {
         document.getElementById("registrationForm").submit();
     }
 }
 
 //AJAX
+
+
+function showUser(selectedValue) {
+    if (selectedValue === 'all') {
+        $.ajax({
+            url: '/api/WebAPI/ShowAllUser',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, xhr) {
+                var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th><th>Action</th></tr></thead><tbody>';
+                data.forEach(function (user) {
+                    tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate.toISOString().slice(0, 10) + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
+                });
+                tableHtml += '</tbody>';
+                $('#userTable').html(tableHtml);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                console.log('Status: ' + textStatus);
+                console.log('Error: ' + errorThrown);
+                console.log('Response: ' + xhr.responseText);
+            }
+        });
+    }
+    // ... rest of the showUser() function
+}
 

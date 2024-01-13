@@ -13,6 +13,7 @@
     @*Hier wird *@
     <link rel="stylesheet" type="text/css" href="~/css/site.css" />
     <script src="~/js/site.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -86,7 +87,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

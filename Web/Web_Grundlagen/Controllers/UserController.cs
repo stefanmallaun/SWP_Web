@@ -147,12 +147,12 @@ namespace Web_Grundlagen.Controllers {
                     if(passwordResult == PasswordVerificationResult.Success) {
                         return RedirectToAction("Index", "Home");
                     }
-                else {
+                    else {
                     return View("Message", new Message() {
                         Title = "Login",
                         MsgTxt = "Email oder Passwort ist falsch!"
                     });
-                }
+                    }
                 }
                 
                 else {
