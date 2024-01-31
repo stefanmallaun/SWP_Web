@@ -1,59 +1,54 @@
 ﻿@model List<Web_Grundlagen.Models.User>
 
 @using Web_Grundlagen.Models
-<head>
-    
-</head>
-<body>
 
-    <div class="container mt-5">
-        <h2>Alle Benutzer</h2>
-        <form action="">
+<div class="container mt-5">
+    <h2>Alle Benutzer</h2>
+    <form action="">
         <!-- Dropdown-Liste für die Rollen -->
-        <select id="roleDropdown" onchange="showUser(this.value)" class="form-control">
-            <option value="all">Alle Rollen</option>
-            <option value="registeredUser">registeredUser</option>
-            <option value="Admin">Admin</option>
+        ///TODO: Roles von DB
+        <select id="dropDown" onchange="showUser(this.value)" class="form-control">
+            <section id="dropDown"></section>
         </select>
-        </form>
-        <br />
-        <table class="table table-striped mt-3" id="userTable" />
-        <!--
-        <table class="table table-striped mt-3">
-            <thead>
+    </form>
+    <br />
+
+    <table class="table table-striped mt-3" id="userTable" />
+    <!--
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Geburtsdatum</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+    @*
+            @foreach (var user in Model) {
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Geburtsdatum</th>
-                    <th>Action</th>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Birthdate.ToLongDateString()</td>
+                    <td>@user.Role</td>
+                    <td>
+                        <a href="@Url.Action("EditUser", "User", new { email = user.Email })" class="btn btn-primary">Edit</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody id="userTableBody">
-                @*
-                @foreach (var user in Model) {
-                    <tr>
-                        <td>@user.Name</td>
-                        <td>@user.Email</td>
-                        <td>@user.Birthdate.ToLongDateString()</td>
-                        <td>@user.Role</td>
-                        <td>
-                            <a href="@Url.Action("EditUser", "User", new { email = user.Email })" class="btn btn-primary">Edit</a>
-                        </td>
-                    </tr>
-                }
-                *@
-            </tbody>
-        </table>
-        </div>
-        
-        @if (Model == null || Model.Count == 0) {
+            }
+            *@
+        </tbody>
+    </table>
+    </div>
+
+    @if (Model == null || Model.Count == 0) {
             <p>Es sind noch keine Benutzer vorhanden!</p>
-        }
-    
-        -->
+    }
 
-        </div>
-            
+    -->
 
-</body>
+</div>
+
+
 

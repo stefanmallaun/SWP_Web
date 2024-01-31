@@ -68,17 +68,17 @@ function submit() {
 
 //AJAX
 
-
+/*
 function showUser(selectedValue) {
     if (selectedValue === 'all') {
         $.ajax({
-            url: '/api/WebAPI/ShowAllUser',
+            url: '/api/user/ShowAllUser',
             type: 'GET',
             dataType: 'json',
             success: function (data, textStatus, xhr) {
                 var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th><th>Action</th></tr></thead><tbody>';
                 data.forEach(function (user) {
-                    tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate.toISOString().slice(0, 10) + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
+                    tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
                 });
                 tableHtml += '</tbody>';
                 $('#userTable').html(tableHtml);
@@ -91,6 +91,71 @@ function showUser(selectedValue) {
             }
         });
     }
-    // ... rest of the showUser() function
+    if (selectedValue == 'registeredUser') {
+        $.ajax({
+            url: '/api/user/showRegisteredUser',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, xhr) {
+                var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th><th>Action</th></tr></thead><tbody>';
+                data.forEach(function (user) {
+                    tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
+                });
+                tableHtml += '</tbody>';
+                $('#userTable').html(tableHtml);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                console.log('Status: ' + textStatus);
+                console.log('Error: ' + errorThrown);
+                console.log('Response: ' + xhr.responseText);
+            }
+        });
+    }
+    if (selectedValue == 'Admin') {
+        $.ajax({
+            url: '/api/user/showAdminUsers',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, xhr) {
+                var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th><th>Action</th></tr></thead><tbody>';
+                data.forEach(function (user) {
+                    tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
+                });
+                tableHtml += '</tbody>';
+                $('#userTable').html(tableHtml);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                console.log('Status: ' + textStatus);
+                console.log('Error: ' + errorThrown);
+                console.log('Response: ' + xhr.responseText);
+            }
+        });
+    }
+    
 }
-
+*/
+function showUser() {
+    
+        $.ajax({
+            url: '/api/user/ShowAllUser',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, xhr) {
+                var dropDownHtml = '<select id="roleDropdown" onchange="showUser(this.value)" class="form-control">';
+                data.forEach(function (user) {
+                    dropDownHtml += 'option value="' + user.role + '"> <' + user.role + '</option>';
+                  
+                });
+                dropDownHtml += '</tbody>';
+                $('#dropDown').html(dropDownHtml);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                console.log('Status: ' + textStatus);
+                console.log('Error: ' + errorThrown);
+                console.log('Response: ' + xhr.responseText);
+            }
+        });
+}

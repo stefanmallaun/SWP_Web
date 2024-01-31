@@ -1,3 +1,5 @@
+using Web_Grundlagen.DB;
+
 namespace Web_Grundlagen {
     public class Program {
         public static void Main(string[] args) {
@@ -18,8 +20,8 @@ namespace Web_Grundlagen {
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDistributedMemoryCache();
-            
-           
+
+            builder.Services.AddDbContext<DBManager>(ServiceLifetime.Singleton);
 
             var app = builder.Build();
 

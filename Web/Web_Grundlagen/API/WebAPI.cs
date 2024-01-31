@@ -4,14 +4,14 @@ using Web_Grundlagen.DB;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Web_Grundlagen.Migrations;
 
 namespace Web_Grundlagen.API
 {
-    // Note: This should be in an ApiController, not the MVC Controller.
-    // You would need to create a separate ApiController or modify your existing UserController to inherit from ControllerBase instead of Controller.
-
+ 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/user/")]
     public class UserApiController : ControllerBase
     {
         private readonly DBManager _dbManager;
@@ -25,10 +25,25 @@ namespace Web_Grundlagen.API
         public async Task<ActionResult<IEnumerable<User>>> ShowAllUser()
         {
             var users = await _dbManager.Users.ToListAsync();
-            return Ok(users);
+            return users;
         }
 
-        // Other API methods...
+        [HttpGet("ShowRegisteredUser")]
+        public async Task<ActionResult<IEnumerable<User>>> showRegisteredUser() {
+
+            var users = await _dbManager.Users.Where(users => users.Role == Role.registeredUser).ToListAsync();
+            return users;
+
+        }
+
+        [HttpGet("showAdminUsers")]
+        public async Task<ActionResult<IEnumerable<User>>> showAdminUsers() {
+
+            var users = await _dbManager.Users.Where(users => users.Role == Role.Admin).ToListAsync();
+            return users;
+
+        }
+
     }
 
 }

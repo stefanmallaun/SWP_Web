@@ -67,8 +67,8 @@ namespace Web_Grundlagen.Controllers {
                 
 
                 // Now, save the hashed password to the database
-                using (var dbContext = new DBManager()) // Replace YourDbContext with your actual DbContext class
-                {
+                using (var dbContext = new DBManager()) 
+                {   
                     dbContext.Users.Add(user);
                     await SaveToDbAsync(dbContext); // Save the changes to the database
                 }
