@@ -27,13 +27,15 @@
                     <a href="/user/showAllUser">Userverwaltung</a>
                 </li>
 
+
     @{
-        var user = HttpContextAccessor.HttpContext.Session.Get<User>("User");
-        if(user != null) {
+        var User = HttpContextAccessor.HttpContext.Session.Get<User>("User");
+        @if (User != null && User.Role == Role.Admin)
+        {
             <li class="level2">
-                <a href="/user/editUser?email=@user.Email">User ändern</a>
+                <a href="/user/editUser?email=@User.Email">User ändern</a>
             </li>
         }
-    }
 
+    }
 </ul>

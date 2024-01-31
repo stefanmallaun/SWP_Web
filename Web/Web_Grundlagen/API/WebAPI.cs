@@ -43,6 +43,38 @@ namespace Web_Grundlagen.API
             return users;
 
         }
+        [HttpGet("GetRoles")]
+        public ActionResult<IEnumerable<string>> GetRoles()
+        {
+            var roles = Enum.GetNames(typeof(Role)).ToList();
+            roles.Insert(0, "all"); // Insert "all" at the beginning of the roles list
+            return roles;
+        }
+
+        [HttpGet("ShowUsersByRole")]
+        public async Task<ActionResult<IEnumerable<User>>> ShowUsersByRole(string role)
+        {
+            if (role == "all")
+            {
+                return await _dbManager.Users.ToListAsync();
+            }
+            else
+            {
+                if (Enum.TryParse<Role>(role, out var parsedRole))
+                {
+                    var users = await _dbManager.Users.Where(user => user.Role == parsedRole).ToListAsync();
+                    return users;
+                }
+                else
+                {
+                    // Handle invalid role string
+                    return BadRequest("Invalid role specified");
+                }
+            }
+        }
+
+
+
 
     }
 

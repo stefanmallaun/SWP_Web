@@ -136,26 +136,56 @@ function showUser(selectedValue) {
     
 }
 */
+// Modify the showUser function to populate roles dynamically
 function showUser() {
-    
-        $.ajax({
-            url: '/api/user/ShowAllUser',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data, textStatus, xhr) {
-                var dropDownHtml = '<select id="roleDropdown" onchange="showUser(this.value)" class="form-control">';
-                data.forEach(function (user) {
-                    dropDownHtml += 'option value="' + user.role + '"> <' + user.role + '</option>';
-                  
-                });
-                dropDownHtml += '</tbody>';
-                $('#dropDown').html(dropDownHtml);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error in Operation');
-                console.log('Status: ' + textStatus);
-                console.log('Error: ' + errorThrown);
-                console.log('Response: ' + xhr.responseText);
-            }
-        });
+    $.ajax({
+        url: '/api/user/GetRoles',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            var dropDownHtml = '<select id="dropDown" onchange="showUsersByRole()" class="form-control">';
+
+            data.forEach(function (role, index) {
+                // Set the first role as the default selected value
+                var selected = index === 0 ? 'selected' : '';
+                dropDownHtml += '<option value="' + role + '" ' + selected + '>' + role + '</option>';
+            });
+
+            dropDownHtml += '</select>';
+            $('#dropDownContainer').html(dropDownHtml);
+            // Trigger the change event to show users for the default role
+            $('#dropDown').change();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+            console.log('Status: ' + textStatus);
+            console.log('Error: ' + errorThrown);
+            console.log('Response: ' + xhr.responseText);
+        }
+    });
 }
+
+function showUsersByRole() {
+    var selectedValue = $('#dropDown').val();
+
+    $.ajax({
+        url: '/api/user/ShowUsersByRole?role=' + selectedValue,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th><th>Action</th></tr></thead><tbody>';
+            data.forEach(function (user) {
+                tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
+            });
+            tableHtml += '</tbody>';
+            $('#userTable').html(tableHtml);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+            console.log('Status: ' + textStatus);
+            console.log('Error: ' + errorThrown);
+            console.log('Response: ' + xhr.responseText);
+        }
+    });
+}
+

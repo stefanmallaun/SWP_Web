@@ -1,4 +1,5 @@
 using Web_Grundlagen.DB;
+using Web_Grundlagen.Models;
 
 namespace Web_Grundlagen {
     public class Program {
@@ -23,12 +24,19 @@ namespace Web_Grundlagen {
 
             builder.Services.AddDbContext<DBManager>(ServiceLifetime.Singleton);
 
+            builder.Services.AddAuthentication("Cookies").AddCookie("Cookies");
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Role.Admin.ToString(), policy => policy.RequireRole(Role.Admin.ToString()));
+            });
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment()) {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
