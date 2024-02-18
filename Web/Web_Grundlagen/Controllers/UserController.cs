@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Web_Grundlagen.DB;
 using Web_Grundlagen.Models;
 using Web_Grundlagen.Extensions;
-using Web_Grundlagen.Extensions;
+
 
 
 namespace Web_Grundlagen.Controllers {
@@ -273,6 +273,12 @@ namespace Web_Grundlagen.Controllers {
             HttpContext.Session.Clear();
            
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpPost]
+        public IActionResult PdfCreator() {
+            return View();
         }
 
     }
