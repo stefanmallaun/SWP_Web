@@ -167,15 +167,35 @@ function showUser() {
 
 function showUsersByRole() {
     var selectedValue = $('#dropDown').val();
-
+    if (selectedValue === 'all') {
+        $.ajax({
+            url: '/api/user/ShowAllUser',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, xhr) {
+                var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th></tr></thead><tbody>';
+                data.forEach(function (user) {
+                    tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role;
+                });
+                tableHtml += '</tbody>';
+                $('#userTable').html(tableHtml);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                console.log('Status: ' + textStatus);
+                console.log('Error: ' + errorThrown);
+                console.log('Response: ' + xhr.responseText);
+            }
+        });
+    }
     $.ajax({
         url: '/api/user/ShowUsersByRole?role=' + selectedValue,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus, xhr) {
-            var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th><th>Action</th></tr></thead><tbody>';
+            var tableHtml = '<thead><tr><th>Name</th><th>Email</th><th>Birthdate</th><th>Role</th></tr></thead><tbody>';
             data.forEach(function (user) {
-                tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role + '</td><td><a href="/User/EditUser/' + user.email + '" class="btn btn-primary">Edit</a></td></tr>';
+                tableHtml += '<tr><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.birthdate + '</td><td>' + user.role;
             });
             tableHtml += '</tbody>';
             $('#userTable').html(tableHtml);

@@ -1,7 +1,33 @@
-﻿
+﻿@using System
+@using System.Resources
+@using System.Reflection
+@using System.Threading
+@using System.Globalization
+
 @{
     ViewData["Title"] = "Index";
+
+    // Initialize ResourceManager and selectedCulture
+    ResourceManager rm = new ResourceManager("Web_Grundlagen.Resources.Strings", Assembly.GetExecutingAssembly());
+    var selectedCulture = ViewBag.SelectedCulture ?? Thread.CurrentThread.CurrentUICulture.Name;
 }
 
 <h1>Index</h1>
 
+<button onclick="changeLanguage('en-US')">English</button>
+<button onclick="changeLanguage('es-ES')">Spanish</button>
+<button onclick="changeLanguage('de-DE')">German</button>
+
+<h1>@rm.GetString("Welcome", new CultureInfo(selectedCulture))</h1>
+
+<script>
+    function changeLanguage(culture) {
+        console.log("Changing language to: " + culture);
+        fetch('/Admin/ChangeLanguage?culture=' + culture, { method: 'POST' })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+    }
+</script>

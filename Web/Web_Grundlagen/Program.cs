@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Localization;
+using PdfSharp.Charting;
 using Web_Grundlagen.DB;
 using Web_Grundlagen.Models;
+
 
 namespace Web_Grundlagen {
     public class Program {
@@ -32,7 +35,10 @@ namespace Web_Grundlagen {
             });
 
             var app = builder.Build();
-
+            //builder.Services.Configure<RequestLocalizationOptions>(options =>
+            //{
+             //   options.DefaultRequestCulture = new RequestCulture("en-US");
+            //});
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment()) {

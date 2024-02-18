@@ -43,17 +43,18 @@
                         <form method="post" asp-action="Logout" asp-controller="User">
                             <button type="submit">Logout</button>
                         </form>
+
+                        <form method="post" asp-controller="PDF" asp-action="PDF">
+                            <label>&nbsp;</label>
+                            <input type="submit" value="Generate PDF" />
+                        </form>
                     }
                     else {
                         <button><a href="/User/Login">Login</a></button>
                     }
 
                 }
-                <div class="text-center">
-                    <h1 class="display-4">Welcome</h1>
-                    <p>Click the button below to download the PDF.</p>
-                    <a asp-action="GeneratePdf" asp-controller="PDF" class="btn btn-primary">Download PDF</a>
-                </div>
+                
                 
 
             </p>

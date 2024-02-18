@@ -26,7 +26,7 @@ namespace Web_Grundlagen.Controllers {
         public IActionResult Registration() {
             return View(
                 new User() {
-                    Name = "admin",
+                    Name = "",
                     Birthdate = DateTime.Now
                 }
                 ); 
@@ -149,8 +149,8 @@ namespace Web_Grundlagen.Controllers {
                     }
                     else {
                     return View("Message", new Message() {
-                        Title = "Login",
-                        MsgTxt = "Email oder Passwort ist falsch!"
+                        Title = "Login erfolgreich!",
+                        
                     });
                     }
                 }
