@@ -44,9 +44,10 @@ namespace Web_Grundlagen.API
 
         }
         [HttpGet("GetRoles")]
-        public ActionResult<IEnumerable<string>> GetRoles()
+        public async Task<ActionResult<IEnumerable<string>>> GetRoles()
         {
-            var roles = Enum.GetNames(typeof(Role)).ToList();
+            var roles = await _dbManager.Users.Select(x => x.Role.ToString()).Distinct().ToListAsync();
+            //var roles = Enum.GetNames(typeof(Role)).ToList();
             roles.Insert(0, "all"); // Insert "all" at the beginning of the roles list
             return roles;
         }

@@ -136,7 +136,6 @@ function showUser(selectedValue) {
     
 }
 */
-// Modify the showUser function to populate roles dynamically
 function showUser() {
     $.ajax({
         url: '/api/user/GetRoles',
