@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
-using PdfSharp.Charting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Globalization;
 using Web_Grundlagen.DB;
 using Web_Grundlagen.Models;
-
 
 namespace Web_Grundlagen {
     public class Program {
@@ -14,7 +18,6 @@ namespace Web_Grundlagen {
 
             // Sessions
             builder.Services.AddDistributedMemoryCache();
-
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
@@ -34,11 +37,10 @@ namespace Web_Grundlagen {
                 options.AddPolicy(Role.Admin.ToString(), policy => policy.RequireRole(Role.Admin.ToString()));
             });
 
+            // Add localization services
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             var app = builder.Build();
-            //builder.Services.Configure<RequestLocalizationOptions>(options =>
-            //{
-             //   options.DefaultRequestCulture = new RequestCulture("en-US");
-            //});
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment()) {
@@ -51,9 +53,24 @@ namespace Web_Grundlagen {
 
             app.UseRouting();
 
+            // Configure supported cultures
+            var supportedCultures = new[]
+            {
+                new CultureInfo("es-ES"),
+                new CultureInfo("en-US"),
+                new CultureInfo("de-DE")
+                
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions {
+                DefaultRequestCulture = new RequestCulture("es-ES"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
             app.UseAuthorization();
 
-            //  Session
+            // Session
             app.UseSession();
 
             app.MapControllerRoute(

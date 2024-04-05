@@ -8,11 +8,13 @@
     ViewData["Title"] = "Index";
 
     // Initialize ResourceManager and selectedCulture
-    ResourceManager rm = new ResourceManager("Web_Grundlagen.Resources.Strings", Assembly.GetExecutingAssembly());
+    ResourceManager rm = new ResourceManager("Web_Grundlagen.Resources.Views.Home.Index", Assembly.GetExecutingAssembly());
     var selectedCulture = ViewBag.SelectedCulture ?? Thread.CurrentThread.CurrentUICulture.Name;
+
 }
 
 <h1>Index</h1>
+
 
 <button onclick="changeLanguage('en-US')">English</button>
 <button onclick="changeLanguage('es-ES')">Spanish</button>

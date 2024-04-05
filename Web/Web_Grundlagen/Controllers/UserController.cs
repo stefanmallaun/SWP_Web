@@ -40,19 +40,23 @@ namespace Web_Grundlagen.Controllers {
             //  Überprüfung der Formulardaten am Server muss immer stattfinden
             if (user.Name.Trim().Length < 2) {
                 ModelState.AddModelError("Name", "Der Name muss min. 2 Zeichen lang sein!");
+                return View();
             }
             if (!user.Email.Contains('@')) {
                 ModelState.AddModelError("Email", "Bitte gültige Mail-adresse eingeben!");
+                return View();
             }
             //  Geb-datum ist kein Pflichtfeld & es muss sich in der Vergangenheit befinden
             if((user.Birthdate != DateTime.Now) && (user.Birthdate > DateTime.Now)) {
                 ModelState.AddModelError("Birthdate", "Geburtsdatum muss in der Vergangenheit liegen!");
+                return View();
 
             }
             //  Überprüfen, ob Pwd und PwdRetype gleich ist
             if(user.Pwd != user.PwdRetype)
             {
                 ModelState.AddModelError("Pwd", "Das Passwort muss übereinstimmen!");
+                return View();
             }
 
 
